@@ -128,8 +128,5 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-<<<<<<< HEAD
 
 README.md
-=======
->>>>>>> 224d8b21f662d33250737409cfb9319924ad60e2
