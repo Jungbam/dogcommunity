@@ -2,6 +2,7 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+// log : 로그에 대한 라이브러리
 const logger = require('morgan');
 const dotenv = require('dotenv');
 const consolidate = require('consolidate');
@@ -9,10 +10,12 @@ const { MongoClient } = require('mongodb');
 
 const indexRouter = require('./routes/index');
 
+// env 환경변수를 불러오기 위해 사용
 dotenv.config();
 const app = express();
 
 app.set('port', process.env.PORT || 5000);
+// ejs
 app.engine('html', consolidate.swig);
 app.set('views', path.join(__dirname, 'public'));
 app.set('view engine', 'html');
