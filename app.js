@@ -8,7 +8,7 @@ const indexRouter = require('./routes/index');
 
 const app = express();
 
-app.set('port', process.env.PORT);
+app.set('port', process.env.PORT || 5000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -32,4 +32,6 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
-app.listen();
+app.listen(app.get('port'), () => {
+  console.log('Listening on port', app.get('port'));
+});
