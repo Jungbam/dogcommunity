@@ -4,6 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const dotenv = require('dotenv');
+const { MongoClient } = require('mongodb');
 
 const indexRouter = require('./routes/index');
 
@@ -13,6 +14,15 @@ const app = express();
 app.set('port', process.env.PORT || 5000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
+if (!DB_USER || !DB_PASSWORD || !DB_HOST) {
+  console.log('DB 정보가 불완전합니다!');
+} else {
+  const mongoURI = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/?retryWrites=true&w=majority`;
+
+  const mongoClient = new MongoClient(mongoURI);
+}
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -35,5 +45,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(app.get('port'), () => {
-  console.log('Listening on port', app.get('port'));
+  console.log(app.get('port'), '포트에서 대기 중');
 });
