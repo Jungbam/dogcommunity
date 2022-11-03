@@ -1,8 +1,9 @@
 const express = require('express');
+
 const router = express.Router();
 
-router.get('/', function (req, res, next) {
-  res.render('index', { title: '길 잃은 동물들의 이야기' });
-});
+const pageRouter = require('./routes/pages');
+
+router.use('/', pageRouter);
 
 module.exports = router;
