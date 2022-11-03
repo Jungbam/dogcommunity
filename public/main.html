@@ -39,6 +39,7 @@
       src="https://cdn.startbootstrap.com/sb-forms-latest.js"
       defer
     ></script>
+    <script src="/javascripts/communityIn.js" defer></script>
   </head>
   <body id="page-top">
     <!-- Navigation-->
@@ -73,9 +74,13 @@
         <div class="masthead-subheading">힘든 동물들을 한번 살펴보세요.</div>
         <div class="masthead-heading text-uppercase">This Site For Animal</div>
         <!--동물 선택 MBTI 같은 것 추가할지 고민.-->
-        <a class="btn btn-primary btn-xl text-uppercase" href="#">
+        <!-- <a class="btn btn-primary btn-xl text-uppercase" href="#">
           나에게 맞는 동물을 찾아볼까?
-        </a>
+        </a> -->
+        <form action="/community" method="post">
+          <input type="text" id="comment" name="comment" />
+          <input type="submit" id="submit" value="등록" />
+        </form>
       </div>
     </header>
     <!-- 메인 DIV-->
