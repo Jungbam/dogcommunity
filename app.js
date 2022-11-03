@@ -52,3 +52,9 @@ app.use((err, req, res, next) => {
 app.listen(app.get('port'), () => {
   console.log(app.get('port'), '포트에서 대기 중');
 });
+
+app.use(express.urlencoded());
+app.post('/', function (request, response) {
+  console.log(request.body.user.name);
+  console.log(request.body.user.email);
+});
