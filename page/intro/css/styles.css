@@ -12200,6 +12200,9 @@ section#contact form#contactForm :-ms-input-placeholder {
     Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
+.carouselDiv img {
+  border-radius: 12px;
+}
 .carouselDiv {
   display: flex;
   max-width: 600px;
