@@ -4,6 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const dotenv = require('dotenv');
+const consolidate = require('consolidate');
 const { MongoClient } = require('mongodb');
 
 const indexRouter = require('./routes/index');
@@ -12,8 +13,9 @@ dotenv.config();
 const app = express();
 
 app.set('port', process.env.PORT || 5000);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.engine('html', consolidate.swig);
+app.set('views', path.join(__dirname, 'public'));
+app.set('view engine', 'html');
 
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 if (!DB_USER || !DB_PASSWORD || !DB_HOST) {
