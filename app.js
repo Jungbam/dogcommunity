@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 // log : 로그에 대한 라이브러리
 const logger = require('morgan');
 const dotenv = require('dotenv');
-const consolidate = require('consolidate');
 
 const indexRouter = require('./routes/index');
 
@@ -14,10 +13,8 @@ dotenv.config();
 const app = express();
 
 app.set('port', process.env.PORT || 5000);
-// 템플릿 엔진을 html로 설정
-app.engine('html', consolidate.swig);
-app.set('views', path.join(__dirname, 'public'));
-app.set('view engine', 'html');
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -41,10 +38,4 @@ app.use((err, req, res, next) => {
 
 app.listen(app.get('port'), () => {
   console.log(app.get('port'), '포트에서 대기 중');
-});
-
-app.use(express.urlencoded());
-app.post('/', function (request, response) {
-  console.log(request.body.user.name);
-  console.log(request.body.user.email);
 });
