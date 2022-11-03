@@ -6,28 +6,18 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const dotenv = require('dotenv');
 const consolidate = require('consolidate');
-const { MongoClient } = require('mongodb');
 
 const indexRouter = require('./routes/index');
 
-// env 환경변수를 불러오기 위해 사용
+// 환경변수를 불러오기 위해 사용
 dotenv.config();
 const app = express();
 
 app.set('port', process.env.PORT || 5000);
-// ejs
+// 템플릿 엔진을 html로 설정
 app.engine('html', consolidate.swig);
 app.set('views', path.join(__dirname, 'public'));
 app.set('view engine', 'html');
-
-const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
-if (!DB_USER || !DB_PASSWORD || !DB_HOST) {
-  console.log('DB 정보가 불완전합니다!');
-} else {
-  const mongoURI = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/?retryWrites=true&w=majority`;
-
-  const mongoClient = new MongoClient(mongoURI);
-}
 
 app.use(logger('dev'));
 app.use(express.json());
