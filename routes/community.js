@@ -1,12 +1,36 @@
 const express = require('express');
+const { FindCursor } = require('mongodb');
 const db = require('../db/connection');
 
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
-  res.render('community', { title: '길 잃은 동물들의 이야기' });
+router.get('/', async (req, res, next) => {
+  try {
+    const cursor = await db.collection('community').find({});
+    const articles = await cursor.toArray();
+
+    res.render('community', { articles });
+  } catch (err) {
+    next(err);
+  }
 });
 
-router.post('/', async (req, res, next) => {});
+router.post('/', async (req, res, next) => {
+  try {
+    const doc = {
+      title: req.body.title,
+      contact: req.body.contact,
+      region: req.body.region,
+      missingDate: req.body.missingDate,
+      content: req.body.content,
+    };
+
+    await db.collection('community').insertOne(doc);
+
+    res.redirect('/');
+  } catch (err) {
+    next(err);
+  }
+});
 
 module.exports = router;
