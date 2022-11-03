@@ -1,0 +1,10 @@
+.communityBox {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  width: 95%;
+}
+.communityBox input {
+  width: 100%;
+  margin: 2px auto;
+}

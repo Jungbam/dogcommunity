@@ -7,6 +7,7 @@ const router = express.Router();
 router.get('/', async (req, res, next) => {
   try {
     const cursor = await db.collection('community').find({});
+    console.log(cursor);
     const articles = await cursor.toArray();
 
     res.render('community', { articles });
@@ -24,10 +25,10 @@ router.post('/', async (req, res, next) => {
       missingDate: req.body.missingDate,
       content: req.body.content,
     };
-
+    console.log(doc);
     await db.collection('community').insertOne(doc);
 
-    res.redirect('/');
+    res.redirect('/community');
   } catch (err) {
     next(err);
   }
