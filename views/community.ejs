@@ -3,6 +3,7 @@
   <head>
     <%- include('includes/head') %> 
     <link rel="stylesheet" href="/stylesheets/communitModal.css">
+    <link rel="stylesheet" href="/stylesheets/article.css">
     <script src="/javascripts/modal.js" defer></script>
   </head>
   <body id="page-top">
@@ -18,32 +19,43 @@
     <!--커뮤니티 섹션-->
     <section>
       <div class="communityContainer">
+        <% if(articles ===0){ %>
+        <p>
+          아직 등록된 글이 없어요. 입력하기를 눌러서 글을 등록해봐요.
+        </p>
+        <% }else { %>
+          <ul id="article-list">
+            <% for ( const article of articles){ %>
+              <%- include('includes/article-item', {article : article}) %> 
+        <% } %>
+          </ul>
+          <% } %>
         <!--받아온 데이터에 따라서 페이지 링크 갯수를 만들어줘야함.-->
         <nav aria-label="Page navigation example" class="navpage">
           <div class="communicationBoard"></div>
+          <!-- Modal -->
           <!-- Button trigger modal -->
           <button
             type="button"
             class="btn btn-primary"
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
+            id="modalBtn" style="float: right;"
           >
             입력하기
           </button>
-
-          <!-- Modal -->
           <div
-            class="modal fade"
-            id="exampleModal"
-            tabindex="-1"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
+          class="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
           >
-            <div
-              class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
-            >
-              <div class="modal-content">
-                <div class="modal-header">
+          <div
+          class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+          >
+          <div class="modal-content">
+            <div class="modal-header">
                   <h1 class="modal-title fs-5" id="exampleModalLabel">
                     동물들을 사랑하는 사람들과 정보를 나눠요.
                   </h1>

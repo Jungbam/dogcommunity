@@ -1,0 +1,14 @@
+ <li class="article-item">
+    <article>
+      <h2><%= article.title%></h2>
+      <div class="article-meta">
+        <p><%= article.region%></p>
+      </div>
+      <form action="/community/detail/1" method="get">
+      <!-- <form action="/community/detail/<%= article._id %>" method="get"> -->
+        <div class="article-actions">
+          <input type="submit" href="#" value="상세보기"/>
+        </div>
+      </form>
+    </article>
+  </li>

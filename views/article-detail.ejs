@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('includes/head') %> 
+    <link rel="stylesheet" href="/stylesheets/article.css">
+  </head>
+  <body>
+    <%- include('includes/header') %> 
+    <main>
+      <h1>제목 : <%=article.title%></h1>
+      <p>장소 : <%=article.region%></p>
+      <p>시간 : <%=article.missingDate%></p>
+      <p>설명 : <%=article.content%></p>
+      <p>연락처 : <%=article.contact%></p>
+    </main>
+    <%- include('includes/footer') %> 
+  </body>
+</html>
