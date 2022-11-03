@@ -3,14 +3,26 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const dotenv = require('dotenv');
+const { MongoClient } = require('mongodb');
 
 const indexRouter = require('./routes/index');
 
+dotenv.config();
 const app = express();
 
-app.set('port', process.env.PORT);
+app.set('port', process.env.PORT || 5000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
+if (!DB_USER || !DB_PASSWORD || !DB_HOST) {
+  console.log('DB 정보가 불완전합니다!');
+} else {
+  const mongoURI = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/?retryWrites=true&w=majority`;
+
+  const mongoClient = new MongoClient(mongoURI);
+}
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -20,11 +32,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   next(createError(404));
 });
 
-app.use(function (err, req, res, next) {
+app.use((err, req, res, next) => {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
@@ -32,4 +44,6 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
-app.listen();
+app.listen(app.get('port'), () => {
+  console.log(app.get('port'), '포트에서 대기 중');
+});

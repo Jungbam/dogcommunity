@@ -1,8 +1,15 @@
 const express = require('express');
+
 const router = express.Router();
 
-router.get('/', function (req, res, next) {
-  res.render('index', { title: '길 잃은 동물들의 이야기' });
-});
+const mainRouter = require('./main');
+const missingRouter = require('./missing');
+const abandonedRouter = require('./abandoned');
+const communityRouter = require('./community');
+
+router.use('/', mainRouter);
+router.use('/missing', missingRouter);
+router.use('/abandoned', abandonedRouter);
+router.use('/community', communityRouter);
 
 module.exports = router;
