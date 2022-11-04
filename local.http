@@ -1,0 +1,19 @@
+###
+GET http://localhost:5000 HTTP/1.1
+
+###
+GET http://localhost:5000/board/community HTTP/1.1
+
+###
+POST http://localhost:5000/articles/community HTTP/1.1
+content-type: application/json
+
+{
+    "title": "sadsaaaadf",
+    "content": "dasd"
+}
+
+### 
+GET http://localhost:5000/articles/community?page=4 HTTP/1.1
+
+###

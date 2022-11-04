@@ -3,7 +3,7 @@ const db = require('../config/connection');
 
 const router = express.Router();
 
-router.get('/community', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     res.render('community');
   } catch (err) {
