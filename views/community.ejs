@@ -24,12 +24,11 @@
           아직 등록된 글이 없어요. 입력하기를 눌러서 글을 등록해봐요.
         </p>
         <% }else { %>
-          <ul id="article-list">
+          <div class="accordion" id="accordionExample">
             <% for ( const article of articles){ %>
               <%- include('includes/article-item', {article : article}) %> 
         <% } %>
-          </ul>
-          <% } %>
+          </div>          <% } %>
         <!--받아온 데이터에 따라서 페이지 링크 갯수를 만들어줘야함.-->
         <nav aria-label="Page navigation example" class="navpage">
           <div class="communicationBoard"></div>
@@ -100,6 +99,11 @@
             <li class="page-item">
               <a class="page-link" href="#">리스트</a>
             </li>
+        <% if(articles.length ===0){ %>
+          <></>
+        <% }else { %>
+          
+        <% } %>
             <!--0~19 인덱스-->
             <li class="page-item"><a class="page-link" href="#">1</a></li>
             <!--20~39 인덱스-->
