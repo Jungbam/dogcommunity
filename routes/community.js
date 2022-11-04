@@ -29,9 +29,6 @@ router.post('/', async (req, res, next) => {
   try {
     const article = {
       title: req.body.title,
-      contact: req.body.contact,
-      region: req.body.region,
-      missingDate: req.body.missingDate,
       content: req.body.content,
     };
     await db.collection('community').insertOne(article);
