@@ -25,10 +25,11 @@ if (process.env.NODE_ENV === 'development') {
             }`,
         ),
       ),
+      level: 'silly',
     }),
   );
 }
 // morgan도 winston을 통해 출력하기 위한 stream 메서드 추가
-logger.stream = { write: (message) => logger.info(message) };
+logger.stream = { write: (message) => logger.http(message) };
 
 module.exports = logger;
