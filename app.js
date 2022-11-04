@@ -15,6 +15,7 @@ app.set('view engine', 'ejs');
 
 app.use(
   morgan(
+    // 개발 환경과 배포 환경의 출력 내용 차별화
     process.env.NODE_ENV === 'development'
       ? 'dev'
       : ':remote-addr - :remote-user ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"',
