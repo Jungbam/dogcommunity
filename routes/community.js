@@ -1,6 +1,7 @@
 const express = require('express');
 const { FindCursor } = require('mongodb');
 const db = require('../config/connection');
+const logger = require('../config/winston');
 
 const router = express.Router();
 
