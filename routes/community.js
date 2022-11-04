@@ -7,7 +7,6 @@ const router = express.Router();
 router.get('/', async (req, res, next) => {
   try {
     const cursor = await db.collection('community').find({});
-    console.log(cursor);
     const articles = await cursor.toArray();
 
     res.render('community', { articles });
