@@ -18,13 +18,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/detail/:id', async (req, res, next) => {
   try {
-    const article = {
-      title: '하이',
-      contact: '010-1234-5678',
-      region: '서울',
-      missingDate: Date().now,
-      content: '테스트입니다.',
-    };
+    const article = {};
     res.render('article-detail', { article });
   } catch (err) {
     next(err);
