@@ -1,10 +1,8 @@
 window.onload = function () {
   getArticle();
-  console.log('hi');
 };
 
 function getArticle() {
-  console.log('in');
   axios({
     method: 'get', //통신 방식
     url: '/articles/community', //통신할 페이지
@@ -52,6 +50,17 @@ function getArticle() {
         accordion.appendChild(article);
       });
       accordianBox.appendChild(accordion);
+
+      const pageContainer = document.getElementById('page-container');
+      const maxIndex = data.maxIndex;
+      console.log(maxIndex);
+      for (let i = 0; i < maxIndex; i++) {
+        const pageNum = i + 1;
+        const pageItem = document.createElement('li');
+        pageItem.className = 'page-item';
+        pageItem.innerHTML = `<a class="page-link" href="board/community?page=${pageNum}">${pageNum}</a>`;
+        pageContainer.appendChild(pageItem);
+      }
     })
     .catch((error) => {
       console.log(error);

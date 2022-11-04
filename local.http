@@ -14,6 +14,6 @@ content-type: application/json
 }
 
 ### 
-GET http://localhost:5000/articles/community?page=4 HTTP/1.1
+GET http://localhost:5000/articles/community?page=5 HTTP/1.1
 
 ###

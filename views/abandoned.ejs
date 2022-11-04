@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- <%- include('includes/head') %>  -->
+    <link rel="stylesheet" href="/stylesheets/communitModal.css" />
+    <link rel="stylesheet" href="/stylesheets/abandoned.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+    <script src="/javascripts/abandone.js" defer></script>
+  </head>
+  <body>
+    <!-- <%- include('includes/header') %>  -->
+    <main>
+          <header class="masthead">
+      <div class="container">
+        <div class="masthead-subheading">힘든 동물들을 한번 살펴보세요.</div>
+        <div class="masthead-heading text-uppercase">This Site For Animal</div>
+      </div>
+    </header>
+    <section  id="cardContainer">
+      <div class="card-min-container">
+        <div>
+     <% if(animalInfo.length ===0){ %>
+        <p>
+          아직 등록된 동물들이 없어요.
+        </p>
+        <% }else { %>
+          <p>등록된 버려진 아이들 : <%= animalInfo.length %></p>
+          <ul id="animal-list">
+            <% for ( const animal of animalInfo){ %>
+              <!--ejs 문법으로 props 보내주기-->
+             <div class="card" style="width: 300px;">
+              <img src=<%= animal.imgURL %> class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title"><%= animal.title %></h5>
+                <p class="card-text">연락처 : <%= animal.contact %></p>
+                <p class="card-text">지역 : <%= animal.region %></p>
+                <p class="card-text">내용 : <%= animal.content %></p>
+              </div>
+            </div>
+        <% } %>
+      </ul>
+          <% } %>
+        </div>
+        <!--받아온 데이터에 따라서 페이지 링크 갯수를 만들어줘야함.-->
+        <nav aria-label="Page navigation example" class="navpage">
+          <!-- Modal -->
+          <!-- Button trigger modal -->
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            id="modalBtn"
+          >
+            입력하기
+          </button>
+          <div
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">
+                    동물들을 사랑하는 사람들과 정보를 나눠요.
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form
+                    action="/abandoned"
+                    method="post"
+                    class="communityBox"
+                  >
+                    <div class="form-floating mb-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="title"
+                        name="title"
+                      />
+                      <label for="title">글 제목</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="region"
+                        name="region"
+                      />
+                      <div class="mb-3">
+                        <label for="formFile" class="form-label">사진</label>
+                        <input class="form-control" type="file" id="formFile" name="imgURL">
+                      </div>
+                      <label for="region">장소</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                      <input
+                        type="tel"
+                        class="form-control"
+                        id="contact"
+                        name="contact"
+                      />
+                      <label for="contact">연락처</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                      <input
+                        type="date"
+                        class="form-control"
+                        id="missingDate"
+                        name="missingDate"
+                      />
+                      <label for="missingDate">발견/실종 일자</label>
+                    </div>
+                    <div class="form-floating">
+                      <textarea
+                        class="form-control"
+                        id="content"
+                        style="height: 100px;"
+                      ></textarea>
+                      <label for="content">글 내용</label>
+                    </div>
+                    <input type="submit" id="submit" value="등록" />
+                  </form>
+                </div>
+                <div class="modal-footer"></div>
+              </div>
+            </div>
+          </div>
+          <ul class="pagination" id="page-container">
+            <li class="page-item">
+              <a class="page-link">리스트</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+    </main>
+    <%- include('includes/footer') %> 
+  </body>
+</html>
