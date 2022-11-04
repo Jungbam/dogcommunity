@@ -5,10 +5,7 @@ const router = express.Router();
 
 router.get('/community', async (req, res, next) => {
   try {
-    const cursor = await db.collection('community').find({});
-    const articles = await cursor.toArray();
-
-    res.render('community', { articles });
+    res.render('community');
   } catch (err) {
     next(err);
   }
