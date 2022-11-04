@@ -2,21 +2,19 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-// log : 로그에 대한 라이브러리
-const logger = require('morgan');
+const morgan = require('morgan'); // HTTP 요청 로그에 대한 패키지
 const dotenv = require('dotenv');
 
 const indexRouter = require('./routes/index');
 
-// 환경변수를 불러오기 위해 사용
-dotenv.config();
+dotenv.config(); // 환경변수를 불러오기 위해 사용
 const app = express();
 
 app.set('port', process.env.PORT || 5000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(logger('dev'));
+app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
