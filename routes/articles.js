@@ -16,7 +16,7 @@ router.post('/community', async (req, res, next) => {
 
     await db.collection('community').insertOne(article);
 
-    res.redirect('/community');
+    res.redirect('/board/community');
   } catch (err) {
     next(err);
   }
@@ -33,6 +33,7 @@ router.get('/community', async (req, res, next) => {
     const options = {
       sort: { createdAt: -1 },
       skip: (page - 1) * 20,
+      limit: 20,
     };
 
     const cursor = db.collection('community').find(query, options);
