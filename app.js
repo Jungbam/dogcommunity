@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan'); // HTTP 요청 로그에 대한 패키지
+const logger = require('./config/winston');
 
 const indexRouter = require('./routes/index');
 
@@ -12,7 +13,14 @@ app.set('port', process.env.PORT || 5000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(morgan(process.env.ENV === 'development' ? 'dev' : 'combined'));
+app.use(
+  morgan(
+    process.env.NODE_ENV === 'development'
+      ? 'dev'
+      : ':remote-addr - :remote-user ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"',
+    { stream: logger.stream },
+  ),
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -26,12 +34,12 @@ app.use((req, res, next) => {
 
 app.use((err, req, res, next) => {
   res.locals.message = err.message;
-  res.locals.error = process.env.ENV === 'development' ? err : {};
+  res.locals.error = process.env.NODE_ENV === 'development' ? err : {};
 
   res.status(err.status || 500);
   res.render('error');
 });
 
 app.listen(app.get('port'), () => {
-  console.log(app.get('port'), '포트에서 대기 중');
+  logger.info(`포트 ${app.get('port')}에서 대기 중입니다.`);
 });
