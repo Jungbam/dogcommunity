@@ -22,23 +22,6 @@ router.post('/community', async (req, res, next) => {
   }
 });
 
-router.post('/community/makeDummy', async (req, res, next) => {
-  try {
-    for (let i = 0; i < 100; i++) {
-      const article = {
-        title: `foo ${i}`,
-        content: `bar ${i}`,
-        createdAt: Date.now(),
-      };
-
-      await db.collection('community').insertOne(article);
-    }
-    res.send('done');
-  } catch (err) {
-    next(err);
-  }
-});
-
 router.get('/community', async (req, res, next) => {
   try {
     const countOfArticles = await db.collection('community').countDocuments();
