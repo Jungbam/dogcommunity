@@ -5,7 +5,7 @@ window.onload = function () {
 function getArticle() {
   axios({
     method: 'get', //통신 방식
-    url: '/articles/community', //통신할 페이지
+    url: '/v1/community', //통신할 페이지
     data: {}, //인자로 보낼 데이터
   })
     .then((response) => {
@@ -58,7 +58,7 @@ function getArticle() {
         const pageNum = i + 1;
         const pageItem = document.createElement('li');
         pageItem.className = 'page-item';
-        pageItem.innerHTML = `<a class="page-link" href="board/community?page=${pageNum}">${pageNum}</a>`;
+        pageItem.innerHTML = `<a class="page-link" href="community?page=${pageNum}">${pageNum}</a>`;
         pageContainer.appendChild(pageItem);
       }
     })

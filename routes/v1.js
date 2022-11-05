@@ -1,17 +1,29 @@
 const express = require('express');
 const db = require('../config/connection');
 const logger = require('../config/winston');
+const upload = require('../config/multer');
+const path = require('path');
 
 const router = express.Router();
 
-router.post('/community', async (req, res, next) => {
+router.post('/community', upload.array('image', 5), async (req, res, next) => {
   try {
     const { title, content } = req.body;
+
+    if (!title || !content) {
+      const err = new Error();
+      err.message = 'Bad Request';
+      err.status = 400;
+      throw err;
+    }
+
+    const images = req.files.map((file) => path.join('image', file.filename));
 
     const article = {
       title,
       content,
       createdAt: Date.now(),
+      images,
     };
 
     await db.collection('community').insertOne(article);
@@ -52,14 +64,21 @@ router.get('/community', async (req, res, next) => {
 
 router.post('/missing', async (req, res, next) => {
   try {
-    const { title, content, lostDate, contact, region } = req.body;
+    const { title, content, missingDate, contact, location } = req.body;
+
+    if (!title || !content || !missingDate || !contact || !location) {
+      const err = new Error();
+      err.message = 'Bad Request';
+      err.status = 400;
+      throw err;
+    }
 
     const article = {
       title,
       content,
       lostDate,
       contact,
-      region,
+      location,
       createdAt: Date.now(),
     };
 
@@ -101,14 +120,21 @@ router.get('/missing', async (req, res, next) => {
 
 router.post('/abandoned', async (req, res, next) => {
   try {
-    const { title, content, foundDate, contact, region } = req.body;
+    const { title, content, foundDate, contact, location } = req.body;
+
+    if (!title || !content || !foundDate || !contact || !location) {
+      const err = new Error();
+      err.message = 'Bad Request';
+      err.status = 400;
+      throw err;
+    }
 
     const article = {
       title,
       content,
       foundDate,
       contact,
-      region,
+      location,
       createdAt: Date.now(),
     };
 

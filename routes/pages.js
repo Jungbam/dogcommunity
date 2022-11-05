@@ -17,6 +17,7 @@ router.get('/community', async (req, res, next) => {
 
 router.get('/missing', async (req, res, next) => {
   try {
+    res.render('missing');
   } catch (err) {
     next(err);
   }
@@ -24,6 +25,7 @@ router.get('/missing', async (req, res, next) => {
 
 router.get('/abandoned', async (req, res, next) => {
   try {
+    res.render('abandoned');
   } catch (err) {
     next(err);
   }

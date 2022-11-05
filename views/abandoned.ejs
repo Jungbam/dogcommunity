@@ -19,21 +19,21 @@
     <section  id="cardContainer">
       <div class="card-min-container">
         <div>
-     <% if(animalInfo.length ===0){ %>
+     <% if(articles.length ===0){ %>
         <p>
           아직 등록된 동물들이 없어요.
         </p>
         <% }else { %>
-          <p>등록된 버려진 아이들 : <%= animalInfo.length %></p>
+          <p>등록된 버려진 아이들 : <%= articles.length %></p>
           <ul id="animal-list">
-            <% for ( const animal of animalInfo){ %>
+            <% for ( const animal of articles){ %>
               <!--ejs 문법으로 props 보내주기-->
              <div class="card" style="width: 300px;">
               <img src=<%= animal.imgURL %> class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title"><%= animal.title %></h5>
                 <p class="card-text">연락처 : <%= animal.contact %></p>
-                <p class="card-text">지역 : <%= animal.region %></p>
+                <p class="card-text">지역 : <%= animal.location %></p>
                 <p class="card-text">내용 : <%= animal.content %></p>
               </div>
             </div>
@@ -93,14 +93,14 @@
                       <input
                         type="text"
                         class="form-control"
-                        id="region"
-                        name="region"
+                        id="location"
+                        name="location"
                       />
                       <div class="mb-3">
                         <label for="formFile" class="form-label">사진</label>
                         <input class="form-control" type="file" id="formFile" name="imgURL">
                       </div>
-                      <label for="region">장소</label>
+                      <label for="location">장소</label>
                     </div>
                     <div class="form-floating mb-3">
                       <input
