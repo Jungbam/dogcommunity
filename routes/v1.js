@@ -1,21 +1,12 @@
 const express = require('express');
 const db = require('../config/connection');
 const logger = require('../config/winston');
-const multer = require('multer');
-const fs = require('fs');
+const upload = require('../config/multer');
+const path = require('path');
 
 const router = express.Router();
 
-try {
-  fs.readdirSync('uploads');
-} catch {
-  logger.warn('uploads 폴더가 없습니다!');
-  fs.mkdirSync('uploads');
-}
-
-const upload = multer({});
-
-router.post('/community', async (req, res, next) => {
+router.post('/community', upload.array('image', 5), async (req, res, next) => {
   try {
     const { title, content } = req.body;
 
@@ -26,10 +17,13 @@ router.post('/community', async (req, res, next) => {
       throw err;
     }
 
+    const images = req.files.map((file) => path.join('image', file.filename));
+
     const article = {
       title,
       content,
       createdAt: Date.now(),
+      images,
     };
 
     await db.collection('community').insertOne(article);
