@@ -33,7 +33,7 @@
               <div class="card-body">
                 <h5 class="card-title"><%= animal.title %></h5>
                 <p class="card-text">연락처 : <%= animal.contact %></p>
-                <p class="card-text">지역 : <%= animal.region %></p>
+                <p class="card-text">지역 : <%= animal.location %></p>
                 <p class="card-text">내용 : <%= animal.content %></p>
               </div>
             </div>
@@ -93,14 +93,14 @@
                       <input
                         type="text"
                         class="form-control"
-                        id="region"
-                        name="region"
+                        id="location"
+                        name="location"
                       />
                       <div class="mb-3">
                         <label for="formFile" class="form-label">사진</label>
                         <input class="form-control" type="file" id="formFile" name="imgURL">
                       </div>
-                      <label for="region">장소</label>
+                      <label for="location">장소</label>
                     </div>
                     <div class="form-floating mb-3">
                       <input
