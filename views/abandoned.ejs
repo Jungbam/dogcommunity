@@ -19,14 +19,14 @@
     <section  id="cardContainer">
       <div class="card-min-container">
         <div>
-     <% if(board.length ===0){ %>
+     <% if(articles.length ===0){ %>
         <p>
           아직 등록된 동물들이 없어요.
         </p>
         <% }else { %>
-          <p>등록된 버려진 아이들 : <%= board.length %></p>
+          <p>등록된 버려진 아이들 : <%= articles.length %></p>
           <ul id="animal-list">
-            <% for ( const animal of board){ %>
+            <% for ( const animal of articles){ %>
               <!--ejs 문법으로 props 보내주기-->
              <div class="card" style="width: 300px;">
               <img src=<%= animal.imgURL %> class="card-img-top" alt="...">
