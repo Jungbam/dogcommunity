@@ -86,6 +86,7 @@
 }
 
 body {
+  background-color: whitesmoke;
   margin: 0;
   font-family: var(--bs-body-font-family);
   font-size: var(--bs-body-font-size);
@@ -4292,7 +4293,7 @@ fieldset:disabled .btn {
 }
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-  color: #fff;
+  color: var(--bs-table-active-color);
   background-color: #ffc800;
 }
 
@@ -11764,7 +11765,11 @@ p {
     Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   font-size: 0.95rem;
-  color: #fff;
+  color: white;
+  width: fit-content;
+  font-weight: 2px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 6px;
   letter-spacing: 0.0625em;
 }
 #mainNav .navbar-nav .nav-item .nav-link.active,
