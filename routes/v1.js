@@ -1,8 +1,19 @@
 const express = require('express');
 const db = require('../config/connection');
 const logger = require('../config/winston');
+const multer = require('multer');
+const fs = require('fs');
 
 const router = express.Router();
+
+try {
+  fs.readdirSync('uploads');
+} catch {
+  logger.warn('uploads 폴더가 없습니다!');
+  fs.mkdirSync('uploads');
+}
+
+const upload = multer({});
 
 router.post('/community', async (req, res, next) => {
   try {
