@@ -58,7 +58,7 @@ function getArticle() {
         const pageNum = i + 1;
         const pageItem = document.createElement('li');
         pageItem.className = 'page-item';
-        pageItem.innerHTML = `<a class="page-link" href="board/community?page=${pageNum}">${pageNum}</a>`;
+        pageItem.innerHTML = `<a class="page-link" href="community?page=${pageNum}">${pageNum}</a>`;
         pageContainer.appendChild(pageItem);
       }
     })
