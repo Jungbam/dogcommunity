@@ -4,6 +4,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan'); // HTTP 요청 로그에 대한 패키지
 const logger = require('./config/winston');
+const multer = require('multer');
+const cors = require('cors');
 
 const indexRouter = require('./routes/index');
 
@@ -13,6 +15,15 @@ app.set('port', process.env.PORT || 5000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+const upload = multer({
+  dest: path.resolve('uploads'),
+});
+
+app.use(
+  cors({
+    origin: '*',
+  }),
+);
 app.use(
   morgan(
     // 개발 환경과 배포 환경의 출력 내용 차별화
