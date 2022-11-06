@@ -53,14 +53,19 @@ function getArticle() {
 
       const pageContainer = document.getElementById('page-container');
       const maxIndex = data.maxIndex;
-      console.log(maxIndex);
+      let firstNum = 1;
+      let lastNum = document.getElementById('page-container');
+      // if (maxIndex <= 5) {
       for (let i = 0; i < maxIndex; i++) {
         const pageNum = i + 1;
         const pageItem = document.createElement('li');
         pageItem.className = 'page-item';
-        pageItem.innerHTML = `<a class="page-link" href="community?page=${pageNum}">${pageNum}</a>`;
+        pageItem.innerHTML = `<a class="page-link" href="v1/community?page=${pageNum}">${pageNum}</a>`;
         pageContainer.appendChild(pageItem);
       }
+      console.dir(lastNum.children[8]);
+      // } else {
+      // }
     })
     .catch((error) => {
       console.log(error);

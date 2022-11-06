@@ -5,13 +5,14 @@
   display: flex;
   flex-wrap: wrap;
 }
-.card-min-container {
+.card-parent-container {
   max-width: 1200px;
   width: 95%;
   margin: 0 auto;
 }
 .card {
   border-radius: 12px;
+  width: 20%;
   overflow: hidden;
   box-shadow: 2px 2px 6px grey;
   margin: 2px;
