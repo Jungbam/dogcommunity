@@ -9,14 +9,14 @@ function getArticle() {
     data: {}, //인자로 보낼 데이터
   })
     .then((response) => {
+      const data = response.data;
+
       const accordianBox = document.getElementById('communityContainer');
       const accordion = document.createElement('div');
       accordion.className = 'accordion';
       accordion.setAttribute('id', '"accordionExample"');
-      const data = response.data;
       const articleArray = [...data.articles];
       articleArray.map((el) => {
-        console.log(el);
         const article = document.createElement('div');
 
         const target = '#collapse' + el._id;
@@ -51,18 +51,56 @@ function getArticle() {
       });
       accordianBox.appendChild(accordion);
 
-      const pageContainer = document.getElementById('page-container');
       const maxIndex = data.maxIndex;
-      console.log(maxIndex);
-      for (let i = 0; i < maxIndex; i++) {
-        const pageNum = i + 1;
-        const pageItem = document.createElement('li');
-        pageItem.className = 'page-item';
-        pageItem.innerHTML = `<a class="page-link" href="community?page=${pageNum}">${pageNum}</a>`;
-        pageContainer.appendChild(pageItem);
+      let currentPage;
+      const pagination = document.getElementById('page-container');
+      if (!currentPage) {
+        paging(maxIndex, currentPage);
       }
+      pagination.addEventListener('click', function (e) {
+        currentPage = e.target.innerHTML;
+        paging(maxIndex, currentPage);
+      });
     })
     .catch((error) => {
       console.log(error);
     });
+}
+function paging(totalPage, currentPage = 1) {
+  const pageCount = 5;
+
+  let last = +currentPage + 2;
+  if (currentPage < 3) {
+    last = 5;
+  }
+  if (last > totalPage) {
+    last = totalPage;
+  }
+  let first = last - (pageCount - 1);
+  const next = last + 1;
+  const prev = first - 1;
+  if (totalPage < 1) {
+    first = last;
+  }
+  const pages = document.getElementById('page-container');
+  pages.innerHTML = '';
+
+  if (first > 1) {
+    const pageItem = document.createElement('li');
+    pageItem.className = 'page-item';
+    pageItem.innerHTML = `<a class="page-link" href="v1/community?page=${prev}">prev</a>`;
+    pages.appendChild(pageItem);
+  }
+  for (let i = first; i <= last; i++) {
+    const pageItem = document.createElement('li');
+    pageItem.className = 'page-item';
+    pageItem.innerHTML = `<a class="page-link" href="v1/community?page=${i}">${i}</a>`;
+    pages.appendChild(pageItem);
+  }
+  if (next > 5 && next < totalPage) {
+    const pageItem = document.createElement('li');
+    pageItem.className = 'page-item';
+    pageItem.innerHTML = `<a class="page-link" href="v1/community?page=${next}">next</a>`;
+    pages.appendChild(pageItem);
+  }
 }
