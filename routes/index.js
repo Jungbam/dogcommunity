@@ -1,12 +1,16 @@
-const express = require('express');
+const { Router } = require('express');
 
-const router = express.Router();
+const router = Router();
 
-const pageRouter = require('./pages');
-const api = require('./v1');
+const mainRouter = require('./main');
+const communityRouter = require('./community');
+const missingRouter = require('./missing');
+const abandonedRouter = require('./abandoned');
 
 // 각 라우터별 요청 처리 js로 연결해줌.
-router.use('/', pageRouter);
-router.use('/v1', api);
+router.use('/', mainRouter);
+router.use('/community', communityRouter);
+router.use('/missing', missingRouter);
+router.use('/abandoned', abandonedRouter);
 
 module.exports = router;
