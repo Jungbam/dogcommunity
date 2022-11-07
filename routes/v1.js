@@ -17,14 +17,17 @@ router.post('/community', upload.array('image', 5), async (req, res, next) => {
       throw err;
     }
 
-    const images = req.files.map((file) => path.join('image', file.filename));
-
     const article = {
       title,
       content,
       createdAt: Date.now(),
-      images,
     };
+
+    if (req.files.length) {
+      const images = req.files.map((file) => path.join('image', file.filename));
+
+      article.images = images;
+    }
 
     await db.collection('community').insertOne(article);
 
