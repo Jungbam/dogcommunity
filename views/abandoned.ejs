@@ -80,16 +80,17 @@
                           type="text"
                           class="form-control"
                           id="title"
-                          name="title"
+                          name="title" required
                         />
                         <label for="title">글 제목</label>
                       </div>
                       <div class="form-floating mb-3">
+                        <label for="location">장소</label>
                         <input
                           type="text"
                           class="form-control"
                           id="location"
-                          name="location"
+                          name="location" required
                         />
                         <div class="mb-3">
                           <label for="formFile" class="form-label">사진</label>
@@ -97,17 +98,16 @@
                             class="form-control"
                             type="file"
                             id="formFile"
-                            name="imgURL"
+                            name="imgURL" required
                           />
                         </div>
-                        <label for="location">장소</label>
                       </div>
                       <div class="form-floating mb-3">
                         <input
                           type="tel"
                           class="form-control"
                           id="contact"
-                          name="contact"
+                          name="contact" required
                         />
                         <label for="contact">연락처</label>
                       </div>
@@ -116,7 +116,7 @@
                           type="date"
                           class="form-control"
                           id="foundDate"
-                          name="foundDate"
+                          name="foundDate" required
                         />
                         <label for="foundDate">발견 일자</label>
                       </div>
@@ -125,7 +125,7 @@
                           class="form-control"
                           id="content"
                           style="height: 100px;"
-                          name='content'
+                          name='content' required
                         ></textarea>
                         <label for="content" >글 내용</label>
                       </div>
