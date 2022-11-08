@@ -47,7 +47,7 @@ router.get('/', async (req, res, next) => {
   try {
     const page = parseInt(req.query.page) || 1;
 
-    const countOfArticles = await db.collection('community').countDocuments();
+    const countOfArticles = await db.collection('abandoned').countDocuments();
     const maxIndex = Math.ceil(countOfArticles / 20);
 
     const query = { deletedAt: null };
