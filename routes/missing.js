@@ -24,7 +24,6 @@ router.post('/', upload.array('image', 5), async (req, res, next) => {
       contact,
       location,
       createdAt: Date.now(),
-      deletedAt: null,
     };
 
     if (uploadedImages.length) {
@@ -50,7 +49,7 @@ router.get('/', async (req, res, next) => {
     const countOfArticles = await db.collection('community').countDocuments();
     const maxIndex = Math.ceil(countOfArticles / 20);
 
-    const query = { deletedAt: null };
+    const query = {};
     const options = {
       sort: { createdAt: -1 },
       skip: (page - 1) * 20,
