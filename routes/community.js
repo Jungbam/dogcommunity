@@ -1,11 +1,10 @@
 const { Router } = require('express');
 const db = require('../config/connection');
-const upload = require('../config/multer');
 const path = require('path');
 
 const router = Router();
 
-router.post('/', upload.array('image', 5), async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
     const { title, content } = req.body;
     const uploadedImages = req.files;
@@ -22,14 +21,6 @@ router.post('/', upload.array('image', 5), async (req, res, next) => {
       content,
       createdAt: Date.now(),
     };
-
-    if (uploadedImages.length) {
-      const savedImages = uploadedImages.map((file) =>
-        path.join('image', file.filename),
-      );
-
-      article.images = savedImages;
-    }
 
     await db.collection('community').insertOne(article);
 
@@ -54,7 +45,7 @@ router.get('/', async (req, res, next) => {
     };
 
     const cursor = db.collection('community').find(query, options);
-    const articles = await cursor.toArray();
+    const articles = await cursor.toArray().map();
 
     const board = {
       maxIndex,
@@ -62,6 +53,29 @@ router.get('/', async (req, res, next) => {
     };
 
     res.render('community', board);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post('/:id/comments', async (req, res, next) => {
+  try {
+    const { content } = req.body;
+    const articleId = req.params.id;
+    if (!content) {
+      const err = new Error();
+      err.message = 'Bad Request';
+      err.status = 400;
+      throw err;
+    }
+
+    const comment = {
+      content,
+      createdAt: Date.now(),
+      articleId,
+    };
+
+    res.send('done');
   } catch (err) {
     next(err);
   }
