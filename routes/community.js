@@ -1,13 +1,30 @@
 const { Router } = require('express');
 const db = require('../config/connection');
-const path = require('path');
 
 const router = Router();
+
+async function appendComments(article) {
+  const articleId = article._id.toString();
+
+  const query = { articleId };
+  const options = { createdAt: -1, projection: { articleId: 0 } };
+
+  const comments = await db
+    .collection('comments')
+    .find(query, options)
+    .toArray();
+
+  if (comments.length) {
+    const newArticle = Object.assign(article, { comments });
+
+    return newArticle;
+  }
+  return article;
+}
 
 router.post('/', async (req, res, next) => {
   try {
     const { title, content } = req.body;
-    const uploadedImages = req.files;
 
     if (!title || !content) {
       const err = new Error();
@@ -44,12 +61,18 @@ router.get('/', async (req, res, next) => {
       limit: 20,
     };
 
-    const cursor = db.collection('community').find(query, options);
-    const articles = await cursor.toArray().map();
+    const articles = await db
+      .collection('community')
+      .find(query, options)
+      .toArray();
+
+    const newArticles = await Promise.all(
+      articles.map(async (article) => await appendComments(article)),
+    );
 
     const board = {
       maxIndex,
-      articles,
+      newArticles,
     };
 
     res.render('community', board);
@@ -75,7 +98,9 @@ router.post('/:id/comments', async (req, res, next) => {
       articleId,
     };
 
-    res.send('done');
+    await db.collection('comments').insertOne(comment);
+
+    res.end();
   } catch (err) {
     next(err);
   }
