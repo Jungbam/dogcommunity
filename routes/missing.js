@@ -42,32 +42,4 @@ router.post('/', upload.array('image', 5), async (req, res, next) => {
   }
 });
 
-router.get('/', async (req, res, next) => {
-  try {
-    const page = parseInt(req.query.page) || 1;
-
-    const countOfArticles = await db.collection('community').countDocuments();
-    const maxIndex = Math.ceil(countOfArticles / 20);
-
-    const query = {};
-    const options = {
-      sort: { createdAt: -1 },
-      skip: (page - 1) * 20,
-      limit: 20,
-    };
-
-    const cursor = db.collection('missing').find(query, options);
-    const articles = await cursor.toArray();
-
-    const board = {
-      maxIndex,
-      articles,
-    };
-
-    res.render('missing', board);
-  } catch (err) {
-    next(err);
-  }
-});
-
 module.exports = router;
