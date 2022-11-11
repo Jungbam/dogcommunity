@@ -5,7 +5,6 @@
     <link rel="stylesheet" href="/stylesheets/communitModal.css" />
     <link rel="stylesheet" href="/stylesheets/abandoned.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
-    <script src="/javascripts/abandoned.js" defer></script>
   </head>
   <body>
     <%- include('includes/header') %> 
@@ -22,7 +21,17 @@
         <div class="card-parent-container">
           <div class="card-son-container">
              <ul id="animal-list">
-
+              <%for(i of articles){%>
+               <div class="card">
+                <img src="..." class="card-img-top" alt=<%=i.title%>>
+                <div class="card-body">
+                  <h5 class="card-title"><%=i.title%></h5>
+                  <p class="card-text">연락처 : <%=i.contact%></p>
+                  <p class="card-text">지역 : <%=i.location%></p>
+                  <p class="card-text">내용 : <%=i.content%></p>
+                </div>                
+               </div> 
+              <%}%>              
              </ul>
           </div>
           <!--받아온 데이터에 따라서 페이지 링크 갯수를 만들어줘야함.-->
@@ -71,16 +80,17 @@
                           type="text"
                           class="form-control"
                           id="title"
-                          name="title"
+                          name="title" required
                         />
                         <label for="title">글 제목</label>
                       </div>
                       <div class="form-floating mb-3">
+                        <label for="location">장소</label>
                         <input
                           type="text"
                           class="form-control"
                           id="location"
-                          name="location"
+                          name="location" required
                         />
                         <div class="mb-3">
                           <label for="formFile" class="form-label">사진</label>
@@ -88,17 +98,16 @@
                             class="form-control"
                             type="file"
                             id="formFile"
-                            name="imgURL"
+                            name="imgURL" required
                           />
                         </div>
-                        <label for="location">장소</label>
                       </div>
                       <div class="form-floating mb-3">
                         <input
                           type="tel"
                           class="form-control"
                           id="contact"
-                          name="contact"
+                          name="contact" required
                         />
                         <label for="contact">연락처</label>
                       </div>
@@ -107,7 +116,7 @@
                           type="date"
                           class="form-control"
                           id="foundDate"
-                          name="foundDate"
+                          name="foundDate" required
                         />
                         <label for="foundDate">발견 일자</label>
                       </div>
@@ -116,7 +125,7 @@
                           class="form-control"
                           id="content"
                           style="height: 100px;"
-                          name='content'
+                          name='content' required
                         ></textarea>
                         <label for="content" >글 내용</label>
                       </div>
@@ -129,12 +138,67 @@
             </div>
             <ul class="pagination" id="page-container">
               <li class="page-item">
-                <a class="page-link">리스트</a>
               </li>
             </ul>
           </nav>
         </div>
       </section>
+      <script>
+        window.onload = function () {
+          console.log('hi')
+          getPagination();
+        };
+        const getPagination = ()=>{
+          const maxIndex ='<%=maxIndex%>'
+          let currentPage;
+          const pagination = document.getElementById('page-container');
+          if (!currentPage) {
+            paging(maxIndex, currentPage);
+          }
+          pagination.addEventListener('click', function (e) {
+            currentPage = e.target.innerHTML;
+            paging(maxIndex, currentPage);
+          })
+        }
+        function paging(totalPage, currentPage = 1) {
+          const pageCount = 5;
+          let last = +currentPage + 2;
+          if (currentPage < 3) {
+            last = 5;
+          }
+          if (last > totalPage) {
+            last = totalPage;
+          }
+          let first = last - (pageCount - 1);
+          if(first<1){
+            first = 1
+          }
+          const next = last + 1;
+          const prev = first - 1;
+
+          const pages = document.getElementById('page-container');
+          pages.innerHTML = '';
+        
+          if (first > 1) {
+            const pageItem = document.createElement('li');
+            pageItem.className = 'page-item';
+            pageItem.innerHTML = `<a class="page-link" href="/abandoned?page=${prev}">prev</a>`;
+            pages.appendChild(pageItem);
+          }
+          for (let i = first; i <= last; i++) {
+            const pageItem = document.createElement('li');
+            pageItem.className = 'page-item';
+            pageItem.innerHTML = `<a class="page-link" href="/abandoned?page=${i}">${i}</a>`;
+            pages.appendChild(pageItem);
+          }
+          if (next > 5 && next < totalPage) {
+            const pageItem = document.createElement('li');
+            pageItem.className = 'page-item';
+            pageItem.innerHTML = `<a class="page-link" href="/abandoned?page=${next}">next</a>`;
+            pages.appendChild(pageItem);
+          }
+        }       
+      </script>
     </main>
     <%- include('includes/footer') %>
   </body>
