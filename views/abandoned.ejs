@@ -34,9 +34,6 @@
           const missingURL = urlParams.get('missing')
           const abandonedURL = urlParams.get('abandoned')
 
-          console.log(missingURL)
-          console.log(abandonedURL)
-          
           getPagination('missing', missingMax, abandonedURL);
           getPagination('abandoned', abandonedMax, missingURL);
         };
@@ -44,7 +41,6 @@
           const maxIndex = maxIndexVal
           let currentPage;
           const pagination = document.getElementById(value);
-          console.log(pagination)
           if (!currentPage) {
             paging(maxIndex, currentPage, value, preIndex);
           }
