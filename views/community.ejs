@@ -21,7 +21,7 @@
       <div class="communityContainer">
         <div id="communityContainer">
           <div class="accordion" id="accordionExample">
-            <%for(i of articles){%>
+            <%for(i of newArticles){%>
               <div class="accordion-item">
                 <h2 class="accordion-header" id="headingTwo">
                   <button
@@ -42,7 +42,9 @@
                   data-bs-parent="#accordionExample"
                 >
                   <div class="accordion-body">
-                    <%=i.content%>
+                    <div class="content-container">
+                      <%=i.content%>
+                    </div>
                     <article class="reply-article">
                       <%if(!i.comments){%>
                         <p>
@@ -50,12 +52,15 @@
                         </p>
                       <%}else{%>
                         <%for(i of i.comments){%>
-                          <p><%=i.content%><span><%=i.createdAt%></span></p>
+                          <div class="reply-container">  
+                            <p class="reply-content"><%=i.content%></p>
+                            <p class="reply-created"><%=new Date(i.createdAt).toLocaleString()%></p>
+                          </div>
                         <%}%>
                       <%}%>
-                      <form action="/community/<%=i.id%>/comments" method="post">
+                      <form action="/community/<%=i.id%>/comments" method="post" class="input-reply">
                         <input type="text" id="replyInput" name='content'/>
-                        <input type="submit" value="등록">
+                        <input type="submit" value="등록" >
                       </form>
                     </article>
                   </div>
