@@ -7,7 +7,8 @@ const router = Router();
 
 router.post('/', upload.array('image', 5), async (req, res, next) => {
   try {
-    const { title, content, contact, location } = req.body;
+    const { title, content, contact, location, pages } = req.body;
+    const currentPage = pages.split(',')[0];
     const uploadedImages = req.files;
 
     if (!title || !content || !contact || !location) {
@@ -35,7 +36,7 @@ router.post('/', upload.array('image', 5), async (req, res, next) => {
 
     await db.collection('abandoned').insertOne(article);
 
-    res.redirect('/abandoned');
+    res.redirect(`/shelter?missing=${currentPage || 1}`);
   } catch (err) {
     next(err);
   }

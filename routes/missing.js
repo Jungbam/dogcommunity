@@ -2,12 +2,14 @@ const { Router } = require('express');
 const db = require('../config/connection');
 const upload = require('../config/multer');
 const path = require('path');
+const logger = require('../config/winston');
 
 const router = Router();
 
 router.post('/', upload.array('image', 5), async (req, res, next) => {
   try {
-    const { title, content, missingDate, contact, location } = req.body;
+    const { title, content, missingDate, contact, location, pages } = req.body;
+    const currentPage = pages.split(',')[1];
     const uploadedImages = req.files;
 
     if (!title || !content || !missingDate || !contact || !location) {
@@ -36,7 +38,7 @@ router.post('/', upload.array('image', 5), async (req, res, next) => {
 
     await db.collection('missing').insertOne(article);
 
-    res.redirect('/missing');
+    res.redirect(`/shelter?abandoned=${currentPage || 1}`);
   } catch (err) {
     next(err);
   }
