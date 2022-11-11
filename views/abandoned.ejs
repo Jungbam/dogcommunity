@@ -18,16 +18,19 @@
         </div>
       </header>
       <section id="cardContainer">
-        <%-include('includes/articles',{articles : articles, post : 'missing', value : 'missing'})%>
-        <%-include('includes/articles',{articles : articles, post : 'abandoned', value : 'abandoned'})%>
+        <%-include('includes/articles',{articles : boardOfMissing.articles, post : 'missing', value : 'missing'})%>
+        <%-include('includes/articles',{articles : boardOfAbandoned.articles, post : 'abandoned', value : 'abandoned'})%>
       </section>
       <script>
         window.onload = function () {
-          getPagination('missing');
-          getPagination('abandoned');
+          const abandonedMax = '<%=boardOfAbandoned.maxIndex%>'
+          const missingMax = '<%=boardOfMissing.maxIndex%>'
+
+          getPagination('missing', missingMax);
+          getPagination('abandoned', abandonedMax);
         };
-        const getPagination = (value)=>{
-          const maxIndex ='<%=maxIndex%>'
+        const getPagination = (value, maxIndexVal)=>{
+          const maxIndex = maxIndexVal
           let currentPage;
           const pagination = document.getElementById(value);
           console.log(pagination)

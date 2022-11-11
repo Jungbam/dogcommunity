@@ -1,5 +1,5 @@
 const { Router } = require('express');
-
+const db = require('../config/connection');
 const router = Router();
 
 const missingRouter = require('./missing');
