@@ -31,15 +31,27 @@
           const url = new URL(curURL)
 
           const urlParams = url.searchParams
-          const missingURL = urlParams.get('missing')
-          const abandonedURL = urlParams.get('abandoned')
+          let missingURL = urlParams.get('missing')
+          let abandonedURL = urlParams.get('abandoned')
+          if(!missingURL ){
+            missingURL='1'
+          }
+          if(!abandonedURL){
+            abandonedURL='1'
+          }
+
+          const pagesInputHidden = document.querySelectorAll('.hiddenInputPages')
+          for(const i of pagesInputHidden){
+            i.value=`${missingURL},${abandonedURL}`
+            console.log(i)
+          }
 
           getPagination('missing', missingMax, abandonedURL);
           getPagination('abandoned', abandonedMax, missingURL);
         };
         const getPagination = (value, maxIndexVal, preIndex)=>{
           const maxIndex = maxIndexVal
-          let currentPage;
+          let currentPage
           const pagination = document.getElementById(value);
           if (!currentPage) {
             paging(maxIndex, currentPage, value, preIndex);
