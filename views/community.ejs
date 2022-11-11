@@ -43,7 +43,21 @@
                 >
                   <div class="accordion-body">
                     <%=i.content%>
-                    <article class="reply-article"></article>
+                    <article class="reply-article">
+                      <%if(!i.comments){%>
+                        <p>
+                          등록된 댓글이 없습니다.
+                        </p>
+                      <%}else{%>
+                        <%for(i of i.comments){%>
+                          <p><%=i.content%><span><%=i.createdAt%></span></p>
+                        <%}%>
+                      <%}%>
+                      <form action="/community/<%=i.id%>/comments" method="post">
+                        <input type="text" id="replyInput" name='content'/>
+                        <input type="submit" value="등록">
+                      </form>
+                    </article>
                   </div>
                 </div>
               </div>

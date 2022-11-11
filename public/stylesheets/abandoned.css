@@ -1,5 +1,7 @@
 #cardContainer {
   background-color: #eee;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 #animal-list {
   display: flex;
