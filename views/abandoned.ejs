@@ -26,23 +26,40 @@
           const abandonedMax = '<%=boardOfAbandoned.maxIndex%>'
           const missingMax = '<%=boardOfMissing.maxIndex%>'
 
-          getPagination('missing', missingMax);
-          getPagination('abandoned', abandonedMax);
+          //URL 정리
+          const curURL = window.location.href
+          const url = new URL(curURL)
+
+          const urlParams = url.searchParams
+          const missingURL = urlParams.get('missing')
+          const abandonedURL = urlParams.get('abandoned')
+
+          console.log(missingURL)
+          console.log(abandonedURL)
+          
+          getPagination('missing', missingMax, abandonedURL);
+          getPagination('abandoned', abandonedMax, missingURL);
         };
-        const getPagination = (value, maxIndexVal)=>{
+        const getPagination = (value, maxIndexVal, preIndex)=>{
           const maxIndex = maxIndexVal
           let currentPage;
           const pagination = document.getElementById(value);
           console.log(pagination)
           if (!currentPage) {
-            paging(maxIndex, currentPage,value);
+            paging(maxIndex, currentPage, value, preIndex);
           }
           pagination.addEventListener('click', function (e) {
             currentPage = e.target.innerHTML;
-            paging(maxIndex, currentPage,value);
+            paging(maxIndex, currentPage, value, preIndex);
           })
         }
-        function paging(totalPage, currentPage = 1,value) {
+        function paging(totalPage, currentPage = 1,value, preIndex) {
+          let otherValue
+          if(value==='missing'){
+            otherValue='abandoend'
+          }else{
+            otherValue='missing'
+          }
           const pageCount = 5;
           let last = +currentPage + 2;
           if (currentPage < 3) {
@@ -65,19 +82,19 @@
           if (first > 1) {
             const pageItem = document.createElement('li');
             pageItem.className = 'page-item';
-            pageItem.innerHTML = `<a class="page-link" href="/abandoned?page=${prev}">prev</a>`;
+            pageItem.innerHTML = `<a class="page-link" href="/shelter?${value}=${prev}&${otherValue}=${preIndex}">prev</a>`;
             pages.appendChild(pageItem);
           }
           for (let i = first; i <= last; i++) {
             const pageItem = document.createElement('li');
             pageItem.className = 'page-item';
-            pageItem.innerHTML = `<a class="page-link" href="/abandoned?page=${i}">${i}</a>`;
+            pageItem.innerHTML = `<a class="page-link" href="/shelter?${value}=${i}&${otherValue}=${preIndex}">${i}</a>`;
             pages.appendChild(pageItem);
           }
           if (next > 5 && next < totalPage) {
             const pageItem = document.createElement('li');
             pageItem.className = 'page-item';
-            pageItem.innerHTML = `<a class="page-link" href="/abandoned?page=${next}">next</a>`;
+            pageItem.innerHTML = `<a class="page-link" href="/shelter?${value}=${next}&abandoned=${preIndex}">next</a>`;
             pages.appendChild(pageItem);
           }
         }       
