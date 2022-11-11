@@ -7,7 +7,7 @@ async function appendComments(article) {
   const articleId = article._id.toString();
 
   const query = { articleId };
-  const options = { createdAt: -1, projection: { articleId: 0 } };
+  const options = { createdAt: 1, projection: { articleId: 0 } };
 
   const comments = await db
     .collection('comments')
@@ -50,6 +50,7 @@ router.post('/', async (req, res, next) => {
 router.get('/', async (req, res, next) => {
   try {
     const page = parseInt(req.query.page) || 1;
+    const { openArticle } = req.query;
 
     const countOfArticles = await db.collection('community').countDocuments();
     const maxIndex = Math.ceil(countOfArticles / 20);
@@ -74,6 +75,11 @@ router.get('/', async (req, res, next) => {
       maxIndex,
       newArticles,
     };
+
+    if (openArticle) {
+      board.openArticle = openArticle;
+    }
+
     res.render('community', board);
   } catch (err) {
     next(err);
@@ -82,7 +88,7 @@ router.get('/', async (req, res, next) => {
 
 router.post('/:id/comments', async (req, res, next) => {
   try {
-    const { content } = req.body;
+    const { content, openArticle, page: currentPage } = req.body;
     const articleId = req.params.id;
     if (!content) {
       const err = new Error();
@@ -99,7 +105,7 @@ router.post('/:id/comments', async (req, res, next) => {
 
     await db.collection('comments').insertOne(comment);
 
-    res.end();
+    res.redirect(`/community?page=${currentPage}&openArticle=${openArticle}`);
   } catch (err) {
     next(err);
   }
