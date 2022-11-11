@@ -74,7 +74,6 @@ router.get('/', async (req, res, next) => {
       maxIndex,
       newArticles,
     };
-
     res.render('community', board);
   } catch (err) {
     next(err);
