@@ -7,10 +7,10 @@ const router = Router();
 
 router.post('/', upload.array('image', 5), async (req, res, next) => {
   try {
-    const { title, content, foundDate, contact, location } = req.body;
+    const { title, content, contact, location } = req.body;
     const uploadedImages = req.files;
 
-    if (!title || !content || !missingDate || !contact || !location) {
+    if (!title || !content || !contact || !location) {
       const err = new Error();
       err.message = 'Bad Request';
       err.status = 400;
@@ -20,7 +20,6 @@ router.post('/', upload.array('image', 5), async (req, res, next) => {
     const article = {
       title,
       content,
-      foundDate,
       contact,
       location,
       createdAt: Date.now(),

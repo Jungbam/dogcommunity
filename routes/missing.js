@@ -20,7 +20,7 @@ router.post('/', upload.array('image', 5), async (req, res, next) => {
     const article = {
       title,
       content,
-      lostDate,
+      missingDate,
       contact,
       location,
       createdAt: Date.now(),
