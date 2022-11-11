@@ -7,7 +7,7 @@ async function appendComments(article) {
   const articleId = article._id.toString();
 
   const query = { articleId };
-  const options = { createdAt: -1, projection: { articleId: 0 } };
+  const options = { createdAt: 1, projection: { articleId: 0 } };
 
   const comments = await db
     .collection('comments')
