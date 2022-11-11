@@ -24,7 +24,6 @@ router.post('/', upload.array('image', 5), async (req, res, next) => {
       contact,
       location,
       createdAt: Date.now(),
-      deletedAt: null,
     };
 
     if (uploadedImages.length) {
@@ -38,34 +37,6 @@ router.post('/', upload.array('image', 5), async (req, res, next) => {
     await db.collection('abandoned').insertOne(article);
 
     res.redirect('/abandoned');
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.get('/', async (req, res, next) => {
-  try {
-    const page = parseInt(req.query.page) || 1;
-
-    const countOfArticles = await db.collection('abandoned').countDocuments();
-    const maxIndex = Math.ceil(countOfArticles / 20);
-
-    const query = { deletedAt: null };
-    const options = {
-      sort: { createdAt: -1 },
-      skip: (page - 1) * 20,
-      limit: 20,
-    };
-
-    const cursor = db.collection('missing').find(query, options);
-    const articles = await cursor.toArray();
-
-    const board = {
-      maxIndex,
-      articles,
-    };
-
-    res.render('abandoned', board);
   } catch (err) {
     next(err);
   }
